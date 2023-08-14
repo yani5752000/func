@@ -21,7 +21,8 @@ const getMessages = () => {
 };
 
 const addMessage = ( content ) => {
-    const queryString = "INSERT INTO TABLE messages VALUES($1) RETURNING *";
+    console.log("messages model content: ", content);
+    const queryString = "INSERT INTO messages(message) VALUES($1) RETURNING *";
     return new Promise((resolve, reject) => {
         pool.query(queryString, [content], (error, result) => {
             if (error) {

@@ -10,8 +10,9 @@ router.get("/", (req, res) => {
         .catch(error => res.status(500).send(error))
 });
 
-router.post("/", (req, res) => {
+router.post("/new", (req, res) => {
     const content = req.body.content;
+    console.log("messages rout content: ", content);
     addMessage(content)
         .then(result => res.status(200).send(result))
         .catch(error => res.status(500).send(error))
