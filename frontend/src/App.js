@@ -3,7 +3,6 @@ import './App.css';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Messages from './components/Messages';
-import Message from './components/Message';
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -15,15 +14,8 @@ function App() {
   const getMessages = () => {
     axios.get("http://localhost:8080/messages")
       .then(result => {
-        console.log(result);
-        console.log("app data: ", result.data);
         const messages = result.data;
         setMessages(messages);
-        console.log("app messages: ", messages);
-        return result.data;
-      })
-      .then(data => {
-        setMessages(data);
       })
       .catch(error => console.log(error));
   };
@@ -32,12 +24,22 @@ function App() {
   const createMessage = () => {
     const content = prompt("enter the message");
     console.log("axios content: ", content);
-    axios.post("http://localhost:8080/messages/new", {content})
+    axios.post("http://localhost:8080/messages", {content})
       .then(result => {
         console.log(result);
         getMessages();
       })
       .catch(error => console.log(error))
+  }
+
+  const deleteMessage = () => {
+    const id = prompt("Enter the id of the message to be deleted");
+    axios.delete(`http://localhost:8080/messages/delete/${id}`)
+      .then(result => {
+        console.log("delete result: ", result);
+        getMessages();
+      })
+      .catch(error => console.log(error));
   }
 
   return (
@@ -63,6 +65,12 @@ function App() {
           onClick={createMessage}
           >
             Create Message
+        </button>
+        <button 
+          style={{height:50, width: 100, color:"blue", backgroundColor:"red"}} 
+          onClick={deleteMessage}
+          >
+            Delete a Message
         </button>
       </header>
       

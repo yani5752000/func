@@ -34,4 +34,17 @@ const addMessage = ( content ) => {
     })
 };
 
-module.exports = { getMessages, addMessage };
+const deleteMessage = (id) => {
+    const queryString = "DELETE FROM messages WHERE id = $1";
+    return new Promise((resolve, reject) => {
+        pool.query(queryString, [id], (error, result) => {
+            if(error) {
+                reject(error);
+            } else {
+                resolve(`Message deleted with id ${id}`);
+            }
+        })
+    })
+}
+
+module.exports = { getMessages, addMessage, deleteMessage };
