@@ -33,6 +33,21 @@ const addUser = ( {username, email, password} ) => {
     })
 };
 
+const findUserByEmail = (email) => {
+    console.log("in findUserByEmail: ", email)
+    const queryString = "SELECT * FROM users WHERE email = $1";
+    return new Promise((resolve, reject) => {
+        pool.query(queryString, [email], (error, result) => {
+            if(error) {
+                reject(error);
+            } else {
+                console.log("in findUserByEmail: ", result.rows);
+                resolve(result.rows);
+            }
+        })
+    })
+};
+
 // const deleteMessage = (id) => {
 //     const queryString = "DELETE FROM messages WHERE id = $1";
 //     return new Promise((resolve, reject) => {
@@ -46,4 +61,4 @@ const addUser = ( {username, email, password} ) => {
 //     })
 // }
 
-module.exports = { addUser };
+module.exports = { addUser, findUserByEmail };

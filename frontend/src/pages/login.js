@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function Login() {
@@ -8,9 +9,22 @@ export default function Login() {
     useEffect(() => {
         setWord(email)
     }, [email]);
+    useEffect(() => {
+        setPassword(password)
+    }, [password]);
+
+    const handelLoginSubmit = (event) => {
+        event.preventDefault();
+        axios.post("http://localhost:8080/login", {email, password})
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => console.log(error));
+    }
+
     return (
         <>
-            <form>
+            <form onSubmit={(e) => handelLoginSubmit(e)}>
                 <label>
                     Email
                 </label>
@@ -18,7 +32,7 @@ export default function Login() {
                 <label>
                     Password
                 </label>
-                <input type="password"></input>
+                <input type="password" onChange={(e) => setPassword(e.target.value)}></input>
                 <button type="submit">Login</button>
             </form>
             <p>word: { word }</p>
