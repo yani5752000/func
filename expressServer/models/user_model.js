@@ -48,6 +48,7 @@ const findUserByEmail = (email) => {
     })
 };
 
+
 // const deleteMessage = (id) => {
 //     const queryString = "DELETE FROM messages WHERE id = $1";
 //     return new Promise((resolve, reject) => {

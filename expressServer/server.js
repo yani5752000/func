@@ -1,9 +1,19 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const session = require("express-session");
 
 app.use(cors());
 app.use(express.json());
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUnintialized: false,
+    cookie: {
+        secure: false,
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}))
 
 const messagesRouter = require("./routes/messages");
 const registerRouter = require("./routes/register");

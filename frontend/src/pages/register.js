@@ -1,8 +1,10 @@
 import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -16,6 +18,7 @@ export default function Register() {
         axios.post("http://localhost:8080/register", {username, email, password})
             .then(result => {
                 console.log(result);
+                navigate("/login")
             })
             .catch(error => console.log(error));
     }

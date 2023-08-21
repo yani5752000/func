@@ -8,12 +8,14 @@ router.post("/", (req, res) => {
     findUserByEmail(email)
         .then(result => {
             if(result.length == 0) {
-                res.status(404).send("user not found");
+                return res.json({loggedIn: false});
             } else {
                 if(result[0].password != req.body.password) {
-                    res.status(404).send("passwords mismatch");
+                    return res.json({loggedIn: false});
                 } else {
-                    res.status(200).send("user logged in");
+                    req.session.usermame = result[0].username;
+                    console.log("login.ls req.session.username: ", req.session.usermame);
+                    return res.status(200).json({loggedIn: true, usermame: req.session.username});
                 }
             }
         })
