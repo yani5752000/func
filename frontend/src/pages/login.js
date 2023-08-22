@@ -15,6 +15,8 @@ export default function Login() {
         setPassword(password)
     }, [password]);
 
+    axios.defaults.withCredentials = true;
+
     const handelLoginSubmit = (event) => {
         event.preventDefault();
         axios.post("http://localhost:8080/login", {email, password})
