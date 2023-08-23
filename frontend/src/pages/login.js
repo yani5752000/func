@@ -6,16 +6,20 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [word, setWord] = useState("");
-    useEffect(() => {
-        setWord(email)
-    }, [email]);
-    useEffect(() => {
-        setPassword(password)
-    }, [password]);
+    const [password, setPassword] = useState("")
 
     axios.defaults.withCredentials = true;
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/login/isValid")
+            .then(res => {
+                console.log(res);
+                if (res.data.valid) {
+                    navigate("/");
+                } 
+            })
+            .catch(error => console.log(error));
+    }, []);
 
     const handelLoginSubmit = (event) => {
         event.preventDefault();
@@ -44,7 +48,6 @@ export default function Login() {
                 <input type="password" onChange={(e) => setPassword(e.target.value)}></input>
                 <button type="submit">Login</button>
             </form>
-            <p>word: { word }</p>
         </>
     )
 }
